@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'grocery/css/global.css' %}">
+        <link rel="stylesheet" href="{% static 'grocery/css/form.css' %}">
+        <link rel="stylesheet" href="{% static 'grocery/css/items.css' %}">
+        <link rel="stylesheet" href="{% static 'grocery/css/single-item.css' %}">
+    </head>
+    <body>
+        <section class="section-center">
+            <form method="POST" class="form">
+                {% csrf_token %}
+                <input type="text"
+                       name="name"
+                       placeholder="enter grocery"
+                       value="{{ edit_item.name|default:'' }}"
+                       required>
+                {% if edit_item %}
+                    <input type="hidden" name="item_id" value="{{ edit_item.id }}">
+                    <button class="btn">Update</button>
+                {% else %}
+                    <button class="btn">Add</button>
+                {% endif %}
+            </form>
+            <div class="items">
+                {% for item in items %}
+                    <div class="single-item">
+                        <input type="checkbox"
+                               {% if item.completed %}checked{% endif %}
+                               onclick="location.href='/toggle/{{ item.id }}/'">
+                        <p style="text-decoration:{% if item.completed %}line-through{% endif %}">{{ item.name }}</p>
+                        <a href="/?edit={{ item.id }}">Edit</a>
+                        <a href="/delete/{{ item.id }}/"
+                           onclick="return confirm('Delete this item?')">Delete</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </body>
+</html>
