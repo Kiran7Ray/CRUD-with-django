@@ -1,6 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="Simple grocery list app built with Django. Add, edit, delete and manage your grocery items easily.">
+    <meta name="keywords"
+          content="grocery, todo, django, crud, shopping list, python">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GROCERY</title>
     <head>
         <link rel="stylesheet" href="{% static 'grocery/css/global.css' %}">
         <link rel="stylesheet" href="{% static 'grocery/css/form.css' %}">
@@ -9,7 +16,7 @@
     </head>
     <body>
         <section class="section-center">
-            <form method="POST" class="form">
+            <form method="post" class="Form">
                 {% csrf_token %}
                 <input type="text"
                        name="name"
@@ -30,8 +37,8 @@
                                {% if item.completed %}checked{% endif %}
                                onclick="location.href='/toggle/{{ item.id }}/'">
                         <p style="text-decoration:{% if item.completed %}line-through{% endif %}">{{ item.name }}</p>
-                        <a href="/?edit={{ item.id }}">Edit</a>
-                        <a href="/delete/{{ item.id }}/"
+                        <a href="{% url 'index' %}?edit={{ item.id }}">Edit</a>
+                        <a href="{% url 'delete' item.id %}"
                            onclick="return confirm('Delete this item?')">Delete</a>
                     </div>
                 {% endfor %}
