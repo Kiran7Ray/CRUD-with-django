@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,6 @@ SECRET_KEY = 'django-insecure-g^o@(nk1f(*7-m5c(ijd*dw#cvwmrmn%@nwm7i3db6(s-=w7pb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -48,8 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'djangocrud.urls'
 
 TEMPLATES = [
@@ -117,5 +118,5 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-import os
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
